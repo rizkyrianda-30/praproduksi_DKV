@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b1b2f">
+<title>Praproduksi Desain Grafis | XI DKV</title>
+<style>
+:root{
+  --ink:#1b1b2f; --paper:#fff8ee; --card:#ffffff;
+  --coral:#ff5a36; --blue:#2a5bff; --yellow:#ffc933; --green:#1fa971; --purple:#7a4dff; --pink:#ff7eb6;
+  --muted:#5b5b73; --line:#1b1b2f;
+  --sh:4px 4px 0 var(--ink);
+  --r:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:#e9e1d1;background-image:radial-gradient(#d6ccb6 1.2px,transparent 1.2px);background-size:18px 18px;
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);line-height:1.55;font-size:15.5px}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--paper);position:relative;padding-bottom:92px;
+  border-left:2px solid var(--ink);border-right:2px solid var(--ink)}
+h1,h2,h3{margin:0;line-height:1.2;letter-spacing:-.01em}
+p{margin:0 0 10px}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.top .logo{width:34px;height:34px;border-radius:10px;background:var(--yellow);display:grid;place-items:center;font-size:18px;border:2px solid #fff;flex:none}
+.top .t1{font-size:11px;opacity:.75;letter-spacing:.06em;text-transform:uppercase}
+.top .t2{font-weight:800;font-size:15px}
+
+/* views */
+.view{display:none;padding:16px 16px 8px;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* stepper */
+.stepper{display:flex;gap:6px;margin:0 0 14px;overflow-x:auto;padding-bottom:4px}
+.stepper button{flex:1 0 auto;border:2px solid var(--ink);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;font-size:13px;white-space:nowrap}
+.stepper button.on{background:var(--ink);color:#fff}
+.stepper button.done:not(.on){background:#d9f5e8}
+
+/* cards */
+.card{background:var(--card);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:16px}
+.card h3{font-size:17px;margin-bottom:8px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--ink);border-radius:999px;padding:2px 10px;background:var(--yellow);margin-bottom:10px}
+.pg-title{font-size:26px;font-weight:900;margin:2px 0 4px}
+.pg-sub{color:var(--muted);margin-bottom:16px}
+.hl{background:linear-gradient(transparent 55%,#ffd96a 55%);font-weight:700}
+.bigdef{background:var(--blue);color:#fff;border-color:var(--ink)}
+.bigdef .tag{background:#fff;color:var(--ink)}
+.bigdef p{font-size:16.5px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-weight:700;font-size:13px;background:#fff}
+.c1{background:#ffe3d9}.c2{background:#dfe7ff}.c3{background:#fff0bf}.c4{background:#d9f5e8}.c5{background:#eadfff}
+.tip{border:2px dashed var(--ink);border-radius:14px;padding:12px 14px;background:#fff3c4;margin-bottom:16px}
+.tip b{display:block;margin-bottom:2px}
+
+/* flow */
+.flow{display:flex;align-items:stretch;gap:6px;margin:10px 0 4px}
+.flow div{flex:1;border:2px solid var(--ink);border-radius:12px;padding:8px 4px;text-align:center;font-weight:800;font-size:12.5px;background:#fff}
+.flow div small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+.flow div.me{background:var(--coral);color:#fff;transform:translateY(-4px);box-shadow:3px 3px 0 var(--ink)}
+.flow div.me small{color:#fff}
+.flow i{align-self:center;font-style:normal;font-weight:900}
+
+/* list items */
+.goal{display:flex;gap:12px;align-items:flex-start;padding:12px;border:2px solid var(--ink);border-radius:14px;margin-bottom:10px;background:#fff;box-shadow:3px 3px 0 var(--ink)}
+.goal .n{flex:none;width:36px;height:36px;border-radius:10px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:17px}
+.goal b{display:block}
+.goal span{color:var(--muted);font-size:14px}
+
+/* steps accordion */
+.step{border:2px solid var(--ink);border-radius:14px;background:#fff;margin-bottom:10px;overflow:hidden;box-shadow:3px 3px 0 var(--ink)}
+.step>button{width:100%;display:flex;align-items:center;gap:12px;background:none;border:0;padding:12px;text-align:left}
+.step .num{flex:none;width:38px;height:38px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-weight:900;background:var(--yellow)}
+.step .hd{flex:1}
+.step .hd b{display:block;font-size:15.5px}
+.step .hd small{color:var(--muted);font-size:13px}
+.step .arr{transition:transform .25s;font-weight:900}
+.step.open .arr{transform:rotate(180deg)}
+.step .body{display:none;padding:0 14px 14px 14px;border-top:2px dashed var(--ink);padding-top:12px;font-size:14.5px}
+.step.open .body{display:block}
+.step .body ul{margin:6px 0 10px 18px;padding:0}
+.out{display:inline-block;background:var(--green);color:#fff;border:2px solid var(--ink);border-radius:10px;padding:3px 10px;font-weight:700;font-size:13px}
+.linkbtn{background:none;border:0;font-weight:800;text-decoration:underline;padding:0;margin-bottom:10px;color:var(--blue)}
+
+/* swot */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.sw{border:2px solid var(--ink);border-radius:14px;padding:12px;box-shadow:3px 3px 0 var(--ink);background:#fff}
+.sw h4{margin:0 0 6px;font-size:14px;display:flex;align-items:center;gap:8px}
+.sw h4 span{width:28px;height:28px;border-radius:8px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:900}
+.sw ul{margin:0;padding-left:16px;font-size:13px}
+.sw.S{background:#d9f5e8}.sw.W{background:#ffe3d9}.sw.O{background:#dfe7ff}.sw.T{background:#fff0bf}
+.sw.S h4 span{background:var(--green);color:#fff}.sw.W h4 span{background:var(--coral);color:#fff}.sw.O h4 span{background:var(--blue);color:#fff}.sw.T h4 span{background:var(--yellow)}
+.axis{display:flex;gap:8px;margin-bottom:10px;font-size:12px;font-weight:800;text-align:center}
+.axis div{flex:1;border:2px solid var(--ink);border-radius:999px;padding:3px}
+table.mx{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;border:2px solid var(--ink);border-radius:12px;overflow:hidden}
+table.mx th,table.mx td{border-bottom:2px solid var(--ink);border-right:2px solid var(--ink);padding:8px;vertical-align:top;text-align:left}
+table.mx tr>*:last-child{border-right:0}table.mx tr:last-child>*{border-bottom:0}
+table.mx th{background:var(--ink);color:#fff}
+table.mx td:first-child{font-weight:800;background:#fff3c4;white-space:nowrap}
+ol.how{margin:0;padding-left:20px}
+ol.how li{margin-bottom:6px}
+
+/* pager */
+.pager{display:flex;gap:10px;margin:6px 0 20px}
+.btn{border:2px solid var(--ink);background:#fff;border-radius:14px;padding:12px 16px;font-weight:800;box-shadow:var(--sh);transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.main{background:var(--coral);color:#fff}
+.btn.alt{background:var(--yellow)}
+.btn.block{width:100%}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.pager .btn{flex:1}
+
+/* home */
+.hero{background:var(--coral);color:#fff;border:2px solid var(--ink);border-radius:22px;box-shadow:var(--sh);padding:20px;margin-bottom:16px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);opacity:.9}
+.hero:before{content:"";position:absolute;right:50px;bottom:-34px;width:80px;height:80px;background:var(--blue);border:2px solid var(--ink);transform:rotate(20deg)}
+.hero>*{position:relative;z-index:1}
+.hero .tag{background:#fff;color:var(--ink)}
+.hero h1{font-size:30px;font-weight:900;max-width:75%}
+.hero p{margin:8px 0 0;max-width:80%;font-weight:600}
+.idcard{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px}
+.idcard dt{color:var(--muted);font-weight:600}
+.idcard dd{margin:0;font-weight:800}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.mbtn{border:2px solid var(--ink);border-radius:16px;box-shadow:var(--sh);padding:14px;text-align:left;background:#fff;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.mbtn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.mbtn .ic{font-size:26px}
+.mbtn b{font-size:15px}
+.mbtn small{color:#333;font-size:12.5px;line-height:1.35}
+.mbtn.wide{grid-column:span 2;flex-direction:row;align-items:center;gap:12px}
+.prog{height:14px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden;margin:6px 0}
+.prog i{display:block;height:100%;background:var(--green);width:0;transition:width .4s}
+
+/* flashcard */
+.fc-wrap{perspective:1000px;margin-bottom:14px}
+.fc{position:relative;height:260px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--ink);border-radius:22px;box-shadow:var(--sh);padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc .front{background:var(--yellow)}
+.fc .back{background:var(--blue);color:#fff;transform:rotateY(180deg)}
+.fc .face small{position:absolute;top:14px;left:18px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:11px;opacity:.8}
+.fc .face .q{font-size:20px;font-weight:800}
+.fc .face .a{font-size:17px;font-weight:600}
+.fc .hint{position:absolute;bottom:12px;font-size:12px;opacity:.7}
+.fc-ctl{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.fc-ctl .btn{flex:1;padding:10px}
+.fc-count{font-weight:800;min-width:60px;text-align:center}
+
+/* quiz */
+.qtop{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;margin-bottom:6px}
+.qhead{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.badge{border:2px solid var(--ink);border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800}
+.qprompt{font-size:16.5px;font-weight:700;margin-bottom:12px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:10px;text-align:left;align-items:flex-start;border:2px solid var(--ink);background:#fff;border-radius:14px;padding:10px 12px}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:13px;background:var(--paper)}
+.opt.sel{background:#dfe7ff;box-shadow:3px 3px 0 var(--ink)}
+.ok{background:#bff0d6!important}
+.bad{background:#ffc9bd!important}
+.tfrow{border:2px solid var(--ink);border-radius:14px;padding:10px 12px;margin-bottom:10px;background:#fff}
+.tfrow p{margin:0 0 8px;font-weight:600}
+.tfbtns{display:flex;gap:8px}
+.tfbtns button{flex:1;border:2px solid var(--ink);border-radius:10px;padding:6px;font-weight:800;background:var(--paper)}
+.tfbtns button.sel{background:var(--blue);color:#fff}
+.why{display:none;margin-top:8px;font-size:13.5px;color:#333}
+.checked .why{display:block}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:grid;gap:8px;align-content:start}
+.mi{position:relative;border:2px solid var(--ink);border-radius:12px;background:#fff;padding:9px 10px 9px 10px;text-align:left;font-size:13.5px;font-weight:600;line-height:1.35}
+.mi.cur{outline:3px solid var(--coral);outline-offset:1px}
+.mi .bd{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;margin-right:6px}
+.mi.p0{background:#ffe3d9}.mi.p1{background:#dfe7ff}.mi.p2{background:#fff0bf}.mi.p3{background:#d9f5e8}
+.mi.ok{background:#bff0d6}.mi.bad{background:#ffc9bd}
+.sentence{font-size:16px;line-height:2.3;margin-bottom:12px}
+.blank{display:inline-block;min-width:92px;border:2px dashed var(--ink);border-radius:10px;padding:0 8px;background:#fff;font-weight:800;text-align:center;vertical-align:middle;line-height:1.7}
+.blank.f{border-style:solid;background:#fff0bf}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.wd{border:2px solid var(--ink);border-radius:999px;padding:5px 14px;font-weight:700;background:var(--purple);color:#fff;box-shadow:2px 2px 0 var(--ink)}
+.wd.used{opacity:.3;pointer-events:none}
+.scn{border:2px solid var(--ink);border-radius:14px;padding:10px 12px;margin-bottom:10px;background:#fff}
+.scn p{margin:0 0 8px;font-size:14.5px}
+select{width:100%;font:inherit;font-weight:600;padding:9px 10px;border:2px solid var(--ink);border-radius:10px;background:var(--paper);color:var(--ink)}
+select.ok{background:#bff0d6}select.bad{background:#ffc9bd}
+.lbl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px;color:var(--muted)}
+.seq{list-style:none;margin:0 0 12px;padding:8px;border:2px dashed var(--ink);border-radius:14px;min-height:58px;display:grid;gap:6px;background:#fff}
+.seq li button,.pool button{width:100%;text-align:left;border:2px solid var(--ink);border-radius:10px;padding:7px 10px;font-weight:700;font-size:14px;background:#fff3c4;display:flex;gap:8px;align-items:center}
+.seq li button b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px;flex:none}
+.seq li button.ok{background:#bff0d6}.seq li button.bad{background:#ffc9bd}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.pool button{width:auto;background:#dfe7ff}
+.empty{color:var(--muted);font-size:13.5px;padding:6px}
+.swrow{border:2px solid var(--ink);border-radius:14px;padding:10px 12px;margin-bottom:10px;background:#fff}
+.swrow p{margin:0 0 8px;font-size:14.5px;font-weight:600}
+.swbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.swbtns button{border:2px solid var(--ink);border-radius:10px;padding:6px 0;font-weight:900;background:var(--paper)}
+.swbtns button small{display:block;font-weight:600;font-size:10px}
+.swbtns button.sel.S{background:var(--green);color:#fff}.swbtns button.sel.W{background:var(--coral);color:#fff}
+.swbtns button.sel.O{background:var(--blue);color:#fff}.swbtns button.sel.T{background:var(--yellow)}
+.swrow.ok{background:#bff0d6}.swrow.bad{background:#ffc9bd}
+.locked .inter,.locked select{pointer-events:none}
+.fb{display:none;border:2px solid var(--ink);border-radius:14px;padding:12px 14px;margin:14px 0;font-size:14.5px}
+.fb.show{display:block;animation:fade .3s}
+.fb b{display:block;margin-bottom:4px;font-size:15.5px}
+.fb.good{background:#d9f5e8}.fb.mid{background:#fff0bf}.fb.low{background:#ffe3d9}
+.qbar{margin-bottom:12px}
+.result{text-align:center}
+.score{font-size:64px;font-weight:900;line-height:1;margin:8px 0}
+.bl{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-bottom:8px;text-align:left;font-size:13.5px;font-weight:700}
+.bl .prog{margin:0;height:12px}
+
+/* bottom nav */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:2px solid var(--ink);border-left:2px solid var(--ink);border-right:2px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+.nav button{background:none;border:0;padding:8px 2px 9px;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11.5px;font-weight:800;color:var(--muted)}
+.nav button span{font-size:21px;filter:grayscale(1);transition:transform .2s}
+.nav button.on{color:var(--ink);background:var(--yellow)}
+.nav button.on span{filter:none;transform:translateY(-2px) scale(1.12)}
+.foot{text-align:center;font-size:12px;color:var(--muted);padding:6px 16px 20px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo">🎨</div>
+    <div>
+      <div class="t1">SMK Negeri 1 Singkep · XI DKV</div>
+      <div class="t2">Praproduksi Desain Grafis</div>
+    </div>
+  </header>
+
+  <!-- ============ BERANDA ============ -->
+  <section class="view active" id="v-home">
+    <div class="hero">
+      <span class="tag">Fase F · Kelas XI</span>
+      <h1>Praproduksi Desain Grafis</h1>
+      <p>Rencanakan dulu, desain kemudian. Belajar ringkas, cepat hafal, lalu uji kemampuanmu!</p>
+    </div>
+
+    <div class="card">
+      <h3>🪪 Identitas</h3>
+      <dl class="idcard">
+        <dt>Sekolah</dt><dd>SMK Negeri 1 Singkep</dd>
+        <dt>Guru Pengampu</dt><dd>Rizky Rianda, S.Kom</dd>
+        <dt>Mapel</dt><dd>Desain Komunikasi Visual</dd>
+        <dt>Kelas</dt><dd>XI DKV</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>📈 Progres Belajarmu</h3>
+      <div class="prog"><i id="progBar"></i></div>
+      <small id="progTxt" style="font-weight:700"></small>
+    </div>
+
+    <div class="menu">
+      <button class="mbtn" style="background:#ffe3d9" data-go="definisi"><span class="ic">📖</span><b>1. Definisi</b><small>Apa itu praproduksi?</small></button>
+      <button class="mbtn" style="background:#dfe7ff" data-go="tujuan"><span class="ic">🎯</span><b>2. Tujuan</b><small>Mengapa harus dilakukan?</small></button>
+      <button class="mbtn" style="background:#fff0bf" data-go="langkah"><span class="ic">🪜</span><b>3. Langkah</b><small>7 tahap berurutan</small></button>
+      <button class="mbtn" style="background:#d9f5e8" data-go="swot"><span class="ic">🧭</span><b>4. Analisis SWOT</b><small>Peta kekuatan &amp; peluang</small></button>
+      <button class="mbtn wide" style="background:#eadfff" data-go="hafalan"><span class="ic">🧠</span><div><b>Kartu Hafalan</b><br><small>Balik kartu untuk menghafal inti materi</small></div></button>
+      <button class="mbtn wide" style="background:var(--yellow)" data-go="latihan"><span class="ic">🏆</span><div><b>Latihan Soal (Taksonomi Bloom)</b><br><small>9 soal interaktif C1–C6 · skor 0–100</small></div></button>
+    </div>
+    <div class="foot">Tip: pada halaman materi, geser layar ke kiri/kanan untuk pindah halaman.</div>
+  </section>
+
+  <!-- ============ MATERI 1: DEFINISI ============ -->
+  <section class="view" id="v-definisi">
+    <div class="stepper"></div>
+    <span class="tag">Materi 1</span>
+    <div class="pg-title">Definisi Praproduksi</div>
+    <div class="pg-sub">Inti pengertian dalam satu kalimat.</div>
+
+    <div class="card bigdef">
+      <span class="tag">Definisi</span>
+      <p>Proses praproduksi desain grafis adalah <u>tahap persiapan dan perencanaan</u> yang dilakukan <u>sebelum desain dikerjakan secara visual</u>, mencakup pemahaman kebutuhan, riset, penentuan konsep, hingga rancangan awal (sketsa).</p>
+    </div>
+
+    <div class="card">
+      <h3>🔑 Kata Kunci</h3>
+      <div class="chips">
+        <span class="chip c1">Persiapan</span><span class="chip c2">Perencanaan</span><span class="chip c3">Sebelum eksekusi</span><span class="chip c4">Riset</span><span class="chip c5">Konsep &amp; sketsa</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔁 Posisi dalam Alur Kerja</h3>
+      <div class="flow">
+        <div class="me">Praproduksi<small>Merencanakan</small></div><i>→</i>
+        <div>Produksi<small>Mengerjakan</small></div><i>→</i>
+        <div>Pascaproduksi<small>Menyempurnakan</small></div>
+      </div>
+      <p style="font-size:13.5px;margin-top:10px"><b>Praproduksi:</b> menentukan <i>apa</i> dan <i>mengapa</i> desain dibuat.<br><b>Produksi:</b> membuat desain secara digital (layout, ilustrasi, tipografi).<br><b>Pascaproduksi:</b> finishing, revisi akhir, cetak/publikasi, evaluasi.</p>
+    </div>
+
+    <div class="tip"><b>💡 Analogi</b>Seperti arsitek yang menggambar denah dahulu sebelum bangunan didirikan, desainer menyusun rencana dahulu sebelum membuka aplikasi desain.</div>
+    <div class="tip" style="background:#d9f5e8"><b>🧠 Ingat!</b>“Rencana matang, desain mantap.”</div>
+    <div class="pager-slot"></div>
+  </section>
+
+  <!-- ============ MATERI 2: TUJUAN ============ -->
+  <section class="view" id="v-tujuan">
+    <div class="stepper"></div>
+    <span class="tag">Materi 2</span>
+    <div class="pg-title">Tujuan Praproduksi</div>
+    <div class="pg-sub">Enam alasan mengapa tahap ini tidak boleh dilewati.</div>
+
+    <div class="goal"><div class="n" style="background:#ffe3d9">1</div><div><b>Memahami kebutuhan klien &amp; audiens</b><span>Desain dibuat sesuai tujuan dan sasaran, bukan sekadar selera pribadi.</span></div></div>
+    <div class="goal"><div class="n" style="background:#dfe7ff">2</div><div><b>Menentukan arah &amp; konsep desain</b><span>Ide utama, gaya, dan pesan visual disepakati sejak awal.</span></div></div>
+    <div class="goal"><div class="n" style="background:#fff0bf">3</div><div><b>Efisiensi waktu, tenaga &amp; biaya</b><span>Kerja terjadwal dan terukur sehingga tidak boros sumber daya.</span></div></div>
+    <div class="goal"><div class="n" style="background:#d9f5e8">4</div><div><b>Meminimalkan revisi &amp; kesalahan</b><span>Konsep disetujui lebih dulu, jadi perubahan besar di akhir bisa dicegah.</span></div></div>
+    <div class="goal"><div class="n" style="background:#eadfff">5</div><div><b>Memastikan pesan tepat sasaran</b><span>Riset menjaga agar komunikasi visual dipahami audiens.</span></div></div>
+    <div class="goal"><div class="n" style="background:#ffd6ea">6</div><div><b>Menyiapkan sumber daya</b><span>Aset (foto, ikon, font), alat, dan pembagian tugas siap sebelum produksi.</span></div></div>
+
+    <div class="tip"><b>🧠 Hafal cepat</b>“Tepat arah, hemat waktu, minim revisi.”</div>
+    <div class="pager-slot"></div>
+  </section>
+
+  <!-- ============ MATERI 3: LANGKAH ============ -->
+  <section class="view" id="v-langkah">
+    <div class="stepper"></div>
+    <span class="tag">Materi 3</span>
+    <div class="pg-title">Langkah-langkah</div>
+    <div class="pg-sub">7 tahap berurutan. Ketuk setiap langkah untuk melihat detail.</div>
+    <button class="linkbtn" id="toggleSteps">Buka semua langkah</button>
+
+    <div class="step"><button><span class="num">1</span><span class="hd"><b>Memahami Brief</b><small>Gali kebutuhan klien</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Menerima dan menggali informasi dari klien.</p><ul><li>Tujuan &amp; pesan utama</li><li>Target audiens</li><li>Media, ukuran, tenggat, anggaran</li></ul><span class="out">Output: Design brief</span></div></div>
+    <div class="step"><button><span class="num">2</span><span class="hd"><b>Riset</b><small>Audiens, kompetitor, tren</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Mengumpulkan data pendukung agar keputusan desain punya dasar.</p><ul><li>Profil &amp; kebiasaan audiens</li><li>Desain kompetitor sejenis</li><li>Tren visual terkini</li></ul><span class="out">Output: Temuan riset</span></div></div>
+    <div class="step"><button><span class="num">3</span><span class="hd"><b>Brainstorming</b><small>Kembangkan ide &amp; konsep</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Menggali ide sebanyak mungkin lalu memilih ide terkuat.</p><ul><li>Mind map &amp; daftar kata kunci</li><li>Menentukan <i>big idea</i></li></ul><span class="out">Output: Konsep utama</span></div></div>
+    <div class="step"><button><span class="num">4</span><span class="hd"><b>Moodboard &amp; Referensi</b><small>Tentukan gaya visual</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Mengumpulkan referensi visual sebagai arah rasa dan suasana.</p><ul><li>Palet warna</li><li>Tipografi &amp; gaya ilustrasi/foto</li><li>Referensi tata letak</li></ul><span class="out">Output: Moodboard</span></div></div>
+    <div class="step"><button><span class="num">5</span><span class="hd"><b>Sketsa</b><small>Thumbnail → rough → layout</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Menuangkan ide ke bentuk visual kasar di kertas atau tablet.</p><ul><li>Thumbnail: sketsa kecil, banyak alternatif</li><li>Rough: pendetailan alternatif terpilih</li><li>Layout kasar sebagai panduan digitalisasi</li></ul><span class="out">Output: Sketsa terpilih</span></div></div>
+    <div class="step"><button><span class="num">6</span><span class="hd"><b>Perencanaan Teknis</b><small>Jadwal, biaya, aset</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Menyusun rencana kerja yang realistis.</p><ul><li>Jadwal &amp; pembagian tugas</li><li>Anggaran dan spesifikasi cetak/digital</li><li>Daftar aset: foto, ikon, font</li></ul><span class="out">Output: Rencana kerja</span></div></div>
+    <div class="step"><button><span class="num">7</span><span class="hd"><b>Presentasi &amp; Persetujuan</b><small>Konsep disetujui klien</small></span><span class="arr">▼</span></button>
+      <div class="body"><p>Mempresentasikan konsep dan sketsa, menerima masukan, lalu meminta persetujuan sebelum produksi dimulai.</p><span class="out">Output: Konsep disetujui</span></div></div>
+
+    <div class="tip"><b>🧠 Urutan mudah diingat</b>Brief → Riset → Brainstorming → Moodboard → Sketsa → Perencanaan → Persetujuan.<br><b style="display:inline;margin-top:6px">Singkatan:</b> <b style="display:inline">B-R-B-M-S-P-P</b> = “<i>Belajar Rajin Biar Makin Sukses, Pasti Pintar</i>”.</div>
+    <div class="pager-slot"></div>
+  </section>
+
+  <!-- ============ MATERI 4: SWOT ============ -->
+  <section class="view" id="v-swot">
+    <div class="stepper"></div>
+    <span class="tag">Materi 4</span>
+    <div class="pg-title">Analisis SWOT</div>
+    <div class="pg-sub">Alat memetakan posisi klien/produk sebelum menentukan strategi visual.</div>
+
+    <div class="card bigdef" style="background:var(--purple)">
+      <span class="tag">Pengertian</span>
+      <p>SWOT adalah metode analisis yang memetakan faktor <u>internal</u> (<b>S</b>trengths, <b>W</b>eaknesses) dan faktor <u>eksternal</u> (<b>O</b>pportunities, <b>T</b>hreats) untuk dasar penyusunan strategi dan konsep desain.</p>
+    </div>
+
+    <div class="tip"><b>🧠 Kunci pembeda</b>SW = Sisi dalam (internal, bisa dikendalikan). OT = di luar (eksternal, tidak bisa dikendalikan).</div>
+
+    <div class="card">
+      <h3>☕ Contoh Kasus: Kedai Kopi Senja (UMKM)</h3>
+      <p style="font-size:13.5px">Pemilik ingin dibuatkan identitas visual dan media promosi.</p>
+      <div class="axis"><div style="background:#d9f5e8">Internal: S &amp; W</div><div style="background:#dfe7ff">Eksternal: O &amp; T</div></div>
+      <div class="swot">
+        <div class="sw S"><h4><span>S</span>Strengths<br>(Kekuatan)</h4><ul><li>Rasa kopi khas</li><li>Lokasi dekat sekolah</li><li>Harga terjangkau</li></ul></div>
+        <div class="sw W"><h4><span>W</span>Weaknesses<br>(Kelemahan)</h4><ul><li>Belum punya logo</li><li>Media sosial belum rapi</li><li>Dana promosi terbatas</li></ul></div>
+        <div class="sw O"><h4><span>O</span>Opportunities<br>(Peluang)</h4><ul><li>Tren ngopi anak muda</li><li>Platform digital gratis</li><li>Wisata meningkat</li></ul></div>
+        <div class="sw T"><h4><span>T</span>Threats<br>(Ancaman)</h4><ul><li>Banyak kedai pesaing</li><li>Harga bahan baku naik</li><li>Tren cepat berubah</li></ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🧩 Dari SWOT ke Strategi Visual</h3>
+      <table class="mx">
+        <tr><th></th><th>Strategi</th><th>Contoh</th></tr>
+        <tr><td>SO</td><td>Pakai kekuatan untuk menangkap peluang</td><td>Konten medsos bertema rasa khas</td></tr>
+        <tr><td>WO</td><td>Atasi kelemahan lewat peluang</td><td>Buat logo &amp; template di platform gratis</td></tr>
+        <tr><td>ST</td><td>Pakai kekuatan untuk hadapi ancaman</td><td>Gaya visual khas lokal sebagai pembeda</td></tr>
+        <tr><td>WT</td><td>Minimalkan kelemahan, hindari ancaman</td><td>Desain sederhana, hemat, konsisten</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📝 Cara Membuat SWOT</h3>
+      <ol class="how">
+        <li>Tentukan objek yang dianalisis.</li>
+        <li>Kumpulkan data (wawancara, observasi, riset).</li>
+        <li>Kelompokkan temuan ke empat kuadran S, W, O, T.</li>
+        <li>Prioritaskan poin yang paling berpengaruh.</li>
+        <li>Rumuskan strategi, lalu terjemahkan menjadi arah visual.</li>
+      </ol>
+    </div>
+    <div class="pager-slot"></div>
+  </section>
+
+  <!-- ============ HAFALAN ============ -->
+  <section class="view" id="v-hafalan">
+    <span class="tag">Kartu Hafalan</span>
+    <div class="pg-title">Balik &amp; Hafalkan</div>
+    <div class="pg-sub">Ketuk kartu untuk melihat jawaban. Coba jawab dulu dalam hati!</div>
+    <div class="fc-wrap"><div class="fc" id="fc">
+      <div class="face front"><small id="fcLab">Pertanyaan</small><div class="q" id="fcQ"></div><div class="hint">Ketuk untuk membalik ↻</div></div>
+      <div class="face back"><small>Jawaban</small><div class="a" id="fcA"></div></div>
+    </div></div>
+    <div class="fc-ctl"><button class="btn" id="fcPrev">‹</button><div class="fc-count" id="fcCount"></div><button class="btn" id="fcNext">›</button></div>
+    <div class="fc-ctl"><button class="btn alt" id="fcShuffle">🔀 Acak</button><button class="btn" id="fcReset">↺ Urut</button></div>
+    <button class="btn main block" data-go="latihan">Lanjut ke Latihan Soal 🏆</button>
+    <div style="height:16px"></div>
+  </section>
+
+  <!-- ============ LATIHAN ============ -->
+  <section class="view" id="v-latihan">
+    <div id="quizArea"></div>
+  </section>
+
+  <nav class="nav">
+    <button data-nav="home"><span>🏠</span>Beranda</button>
+    <button data-nav="materi"><span>📚</span>Materi</button>
+    <button data-nav="hafalan"><span>🧠</span>Hafalan</button>
+    <button data-nav="latihan"><span>🏆</span>Latihan</button>
+  </nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ========== NAVIGASI ========== */
+var views=['home','definisi','tujuan','langkah','swot','hafalan','latihan'];
+var materi=['definisi','tujuan','langkah','swot'];
+var titles={definisi:'1 · Definisi',tujuan:'2 · Tujuan',langkah:'3 · Langkah',swot:'4 · SWOT'};
+var visited=store.get('dkv_visited',{});
+var current='home';
+
+function go(v){
+  current=v;
+  views.forEach(function(x){$('#v-'+x).classList.toggle('active',x===v)});
+  var navKey=materi.indexOf(v)>-1?'materi':v;
+  $$('.nav button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-nav')===navKey)});
+  if(materi.indexOf(v)>-1){visited[v]=1;store.set('dkv_visited',visited)}
+  if(v==='home')updateProgress();
+  if(v==='latihan'&&!quizStarted)startQuiz();
+  window.scrollTo(0,0);
+  buildStepper();
+}
+function updateProgress(){
+  var n=Object.keys(visited).length;
+  $('#progBar').style.width=(n/4*100)+'%';
+  var best=store.get('dkv_best',null);
+  $('#progTxt').textContent=n+' dari 4 materi sudah dibaca'+(best!==null?' · Skor terbaik latihan: '+best:'');
+}
+function buildStepper(){
+  materi.forEach(function(m,i){
+    var sec=$('#v-'+m),st=$('.stepper',sec);
+    st.innerHTML='';
+    materi.forEach(function(k,j){
+      var b=el('button',(k===m?'on ':'')+(visited[k]?'done':''),(j+1)+'. '+titles[k].split(' · ')[1]);
+      b.onclick=function(){go(k)};
+      st.appendChild(b);
+    });
+    var slot=$('.pager-slot',sec);
+    slot.innerHTML='';
+    var pg=el('div','pager');
+    var prev=el('button','btn','‹ '+(i===0?'Beranda':titles[materi[i-1]].split(' · ')[1]));
+    prev.onclick=function(){go(i===0?'home':materi[i-1])};
+    var next=el('button','btn main',(i===3?'Kartu Hafalan':titles[materi[i+1]].split(' · ')[1])+' ›');
+    next.onclick=function(){go(i===3?'hafalan':materi[i+1])};
+    pg.appendChild(prev);pg.appendChild(next);slot.appendChild(pg);
+  });
+}
+$$('[data-go]').forEach(function(b){b.onclick=function(){go(b.getAttribute('data-go'))}});
+$$('.nav button').forEach(function(b){b.onclick=function(){var k=b.getAttribute('data-nav');go(k==='materi'?(materi.indexOf(current)>-1?current:'definisi'):k)}});
+
+/* geser untuk pindah halaman materi */
+(function(){
+  var x0=null,y0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(x0===null)return;
+    var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
+    if(Math.abs(dx)<80||Math.abs(dx)<Math.abs(dy)*1.8)return;
+    var i=materi.indexOf(current);if(i<0)return;
+    if(dx<0){go(i===3?'hafalan':materi[i+1])}else{go(i===0?'home':materi[i-1])}
+  },{passive:true});
+})();
+
+/* accordion langkah */
+$$('.step>button').forEach(function(b){b.onclick=function(){b.parentNode.classList.toggle('open')}});
+var allOpen=false;
+$('#toggleSteps').onclick=function(){allOpen=!allOpen;$$('.step').forEach(function(s){s.classList.toggle('open',allOpen)});this.textContent=allOpen?'Tutup semua langkah':'Buka semua langkah'};
+
+/* ========== KARTU HAFALAN ========== */
+var cards=[
+ ['Apa itu praproduksi desain grafis?','Tahap persiapan dan perencanaan sebelum desain dikerjakan secara visual.'],
+ ['Tiga tahap alur kerja desain?','Praproduksi → Produksi → Pascaproduksi.'],
+ ['Praproduksi menjawab pertanyaan apa?','"Apa" dan "mengapa" desain dibuat.'],
+ ['Sebutkan 6 tujuan praproduksi.','Pahami kebutuhan, tentukan konsep, efisiensi, minim revisi, pesan tepat sasaran, siapkan sumber daya.'],
+ ['Urutan 7 langkah praproduksi?','Brief → Riset → Brainstorming → Moodboard → Sketsa → Perencanaan teknis → Persetujuan.'],
+ ['Apa output langkah "Memahami Brief"?','Design brief (dokumen kebutuhan dan batasan proyek).'],
+ ['Fungsi moodboard?','Menentukan arah gaya visual: warna, tipografi, suasana.'],
+ ['Tiga tingkat sketsa?','Thumbnail → Rough → Layout kasar.'],
+ ['Output langkah terakhir praproduksi?','Konsep yang disetujui klien, siap masuk produksi.'],
+ ['SWOT singkatan dari?','Strengths, Weaknesses, Opportunities, Threats.'],
+ ['Faktor internal vs eksternal SWOT?','Internal: S dan W. Eksternal: O dan T.'],
+ ['Strategi SO, WO, ST, WT artinya?','SO: kekuatan↔peluang. WO: atasi kelemahan via peluang. ST: kekuatan hadapi ancaman. WT: minimalkan kelemahan, hindari ancaman.']
+];
+var deck=cards.slice(),ci=0;
+function drawCard(){
+  var c=deck[ci];$('#fc').classList.remove('flip');
+  $('#fcQ').textContent=c[0];$('#fcA').textContent=c[1];
+  $('#fcCount').textContent=(ci+1)+' / '+deck.length;
+}
+$('#fc').onclick=function(){this.classList.toggle('flip')};
+$('#fcNext').onclick=function(){ci=(ci+1)%deck.length;drawCard()};
+$('#fcPrev').onclick=function(){ci=(ci-1+deck.length)%deck.length;drawCard()};
+$('#fcShuffle').onclick=function(){deck=shuffle(cards);ci=0;drawCard()};
+$('#fcReset').onclick=function(){deck=cards.slice();ci=0;drawCard()};
+drawCard();
+
+/* ========== LATIHAN SOAL ========== */
+var STEPS=['Memahami Brief','Riset','Brainstorming','Moodboard & Referensi','Sketsa','Perencanaan Teknis','Presentasi & Persetujuan'];
+var BLOOM={C1:{n:'Mengingat',c:'#ffe3d9'},C2:{n:'Memahami',c:'#dfe7ff'},C3:{n:'Menerapkan',c:'#fff0bf'},C4:{n:'Menganalisis',c:'#d9f5e8'},C5:{n:'Mengevaluasi',c:'#eadfff'},C6:{n:'Mencipta',c:'#ffd6ea'}};
+
+/* --- pembangun tipe soal: mengembalikan fungsi check() -> pecahan 0..1 --- */
+function mc(b,opts,ans){
+  var sel=-1,wrap=el('div','opts inter');
+  opts.forEach(function(o,i){
+    var btn=el('button','opt','<span class="k">'+'ABCD'[i]+'</span><span>'+o+'</span>');
+    btn.onclick=function(){sel=i;$$('.opt',wrap).forEach(function(x,j){x.classList.toggle('sel',j===i)})};
+    wrap.appendChild(btn);
+  });
+  b.appendChild(wrap);
+  return function(){
+    $$('.opt',wrap).forEach(function(x,j){x.classList.remove('sel');if(j===ans)x.classList.add('ok');else if(j===sel)x.classList.add('bad')});
+    return sel===ans?1:0;
+  };
+}
+function tf(b,items){
+  var ans=items.map(function(){return null}),rows=[];
+  items.forEach(function(it,i){
+    var r=el('div','tfrow inter');
+    r.appendChild(el('p','',it.t));
+    var bt=el('div','tfbtns');
+    [['Benar',true],['Salah',false]].forEach(function(p){
+      var x=el('button','',p[0]);
+      x.onclick=function(){ans[i]=p[1];$$('button',bt).forEach(function(y){y.classList.remove('sel')});x.classList.add('sel')};
+      bt.appendChild(x);
+    });
+    r.appendChild(bt);r.appendChild(el('div','why',it.why));
+    b.appendChild(r);rows.push(r);
+  });
+  return function(){
+    var c=0;
+    rows.forEach(function(r,i){
+      var ok=ans[i]===items[i].a;if(ok)c++;
+      r.classList.add(ok?'ok':'bad');$$('button',r).forEach(function(y){y.classList.remove('sel')});
+    });
+    b.classList.add('checked');
+    return c/items.length;
+  };
+}
+function match(b,pairs){
+  var L=pairs.map(function(p){return p[0]});
+  var R=shuffle(pairs.map(function(p,i){return {t:p[1],o:i}}));
+  var map={},cur=null;
+  var box=el('div','match inter'),cl=el('div','col'),cr=el('div','col');
+  box.appendChild(cl);box.appendChild(cr);b.appendChild(box);
+  b.appendChild(el('p','empty','Ketuk istilah di kiri, lalu ketuk pengertiannya di kanan. Ketuk lagi untuk membatalkan.'));
+  function draw(){
+    cl.innerHTML='';cr.innerHTML='';
+    L.forEach(function(t,i){
+      var has=map[i]!==undefined;
+      var x=el('button','mi'+(cur===i?' cur':'')+(has?' p'+i:''),(has?'<b class="bd">'+(i+1)+'</b>':'')+t);
+      x.onclick=function(){if(map[i]!==undefined){delete map[i];cur=null}else cur=(cur===i?null:i);draw()};
+      cl.appendChild(x);
+    });
+    R.forEach(function(r,ri){
+      var li=null;Object.keys(map).forEach(function(k){if(map[k]===ri)li=+k});
+      var x=el('button','mi'+(li!==null?' p'+li:''),(li!==null?'<b class="bd">'+(li+1)+'</b>':'')+r.t);
+      x.onclick=function(){
+        if(li!==null){delete map[li];draw();return}
+        if(cur!==null){map[cur]=ri;cur=null;draw()}
+      };
+      cr.appendChild(x);
+    });
+  }
+  draw();
+  return function(){
+    var c=0,lb=$$('.mi',cl),rb=$$('.mi',cr);
+    L.forEach(function(t,i){
+      var ok=map[i]!==undefined&&R[map[i]].o===i;if(ok)c++;
+      lb[i].classList.add(ok?'ok':'bad');
+      if(map[i]!==undefined)rb[map[i]].classList.add(ok?'ok':'bad');
+    });
+    return c/L.length;
+  };
+}
+function fill(b,tpl,answers,bank){
+  var vals=answers.map(function(){return null}),words=shuffle(bank);
+  var sen=el('div','sentence inter'),bk=el('div','bank inter');
+  b.appendChild(sen);b.appendChild(el('p','lbl','Bank kata (ketuk untuk mengisi)'));b.appendChild(bk);
+  var parts=tpl.split(/\{(\d)\}/);
+  function draw(){
+    sen.innerHTML='';
+    parts.forEach(function(p,i){
+      if(i%2===0){sen.appendChild(document.createTextNode(p))}
+      else{
+        var k=+p,x=el('button','blank'+(vals[k]?' f':''),vals[k]||'&nbsp;');
+        x.onclick=function(){vals[k]=null;draw()};
+        sen.appendChild(x);
+      }
+    });
+    bk.innerHTML='';
+    words.forEach(function(w){
+      var x=el('button','wd'+(vals.indexOf(w)>-1?' used':''),w);
+      x.onclick=function(){var k=vals.indexOf(null);if(k>-1){vals[k]=w;draw()}};
+      bk.appendChild(x);
+    });
+  }
+  draw();
+  return function(){
+    var c=0,bl=$$('.blank',sen);
+    answers.forEach(function(a,i){
+      var ok=vals[i]===a;if(ok)c++;
+      bl[i].classList.add(ok?'ok':'bad');
+      if(!ok)bl[i].innerHTML=(vals[i]?'<s>'+vals[i]+'</s> ':'')+a;
+    });
+    return c/answers.length;
+  };
+}
+function scenarios(b,items,options){
+  var sels=[];
+  items.forEach(function(it){
+    var r=el('div','scn'),s=el('select');
+    r.appendChild(el('p','',it.t));
+    s.appendChild(el('option','','— pilih langkah —')).value='';
+    options.forEach(function(o){var op=el('option','',o);op.value=o;s.appendChild(op)});
+    r.appendChild(s);b.appendChild(r);sels.push(s);
+  });
+  return function(){
+    var c=0;
+    sels.forEach(function(s,i){
+      var ok=s.value===items[i].a;if(ok)c++;
+      s.classList.add(ok?'ok':'bad');
+    });
+    return c/items.length;
+  };
+}
+function ordering(b,steps){
+  var seq=[],n=steps.length;
+  b.appendChild(el('p','lbl','Urutan jawabanmu'));
+  var ul=el('ol','seq inter'),pool=el('div','pool inter');
+  b.appendChild(ul);b.appendChild(el('p','lbl','Pilihan langkah (ketuk untuk memasukkan)'));b.appendChild(pool);
+  var order=shuffle(steps.map(function(s,i){return i}));
+  function draw(){
+    ul.innerHTML='';
+    if(!seq.length)ul.appendChild(el('li','empty','Belum ada langkah dipilih.'));
+    seq.forEach(function(k,p){
+      var li=el('li'),x=el('button','','<b>'+(p+1)+'</b>'+steps[k]);
+      x.onclick=function(){seq.splice(p,1);draw()};
+      li.appendChild(x);ul.appendChild(li);
+    });
+    pool.innerHTML='';
+    order.forEach(function(k){
+      if(seq.indexOf(k)>-1)return;
+      var x=el('button','',steps[k]);
+      x.onclick=function(){seq.push(k);draw()};
+      pool.appendChild(x);
+    });
+  }
+  draw();
+  return function(){
+    var c=0,bs=$$('li button',ul);
+    seq.forEach(function(k,p){var ok=k===p;if(ok)c++;if(bs[p])bs[p].classList.add(ok?'ok':'bad')});
+    return c/n;
+  };
+}
+function swotClass(b,items){
+  var ans=items.map(function(){return null}),rows=[];
+  var LBL={S:'Strength',W:'Weakness',O:'Opportunity',T:'Threat'};
+  items.forEach(function(it,i){
+    var r=el('div','swrow inter');r.appendChild(el('p','',it.t));
+    var g=el('div','swbtns');
+    ['S','W','O','T'].forEach(function(k){
+      var x=el('button','','<span>'+k+'</span><small>'+LBL[k].slice(0,4)+'.</small>');
+      x.onclick=function(){ans[i]=k;$$('button',g).forEach(function(y){y.className=''});x.className='sel '+k};
+      g.appendChild(x);
+    });
+    r.appendChild(g);b.appendChild(r);rows.push(r);
+  });
+  return function(){
+    var c=0;
+    rows.forEach(function(r,i){
+      var ok=ans[i]===items[i].a;if(ok)c++;
+      r.classList.add(ok?'ok':'bad');
+      r.appendChild(el('div','why','<b>Jawaban: '+items[i].a+'</b> — '+items[i].why));
+      r.querySelector('.why').style.display='block';
+    });
+    return c/items.length;
+  };
+}
+function compose(b,items){
+  var sels=[];
+  items.forEach(function(it){
+    var r=el('div','scn');r.appendChild(el('p','lbl',it.l));
+    var s=el('select');var ph=el('option','','— pilih —');ph.value='';s.appendChild(ph);
+    shuffle(it.o.map(function(t,i){return {t:t,i:i}})).forEach(function(o){var op=el('option','',o.t);op.value=o.i;s.appendChild(op)});
+    r.appendChild(s);b.appendChild(r);sels.push(s);
+  });
+  return function(){
+    var c=0;
+    sels.forEach(function(s,i){var ok=s.value==='0';if(ok)c++;s.classList.add(ok?'ok':'bad');if(!ok){var p=s.parentNode;p.appendChild(el('div','why','<b>Paling tepat:</b> '+items[i].o[0])).style.display='block'}});
+    return c/items.length;
+  };
+}
+
+/* --- bank soal --- */
+var quiz=[
+ {c:'C1',type:'Pilihan Ganda',w:8,
+  p:'Manakah pernyataan yang paling tepat tentang praproduksi desain grafis?',
+  ex:'Praproduksi adalah tahap persiapan dan perencanaan sebelum desain dieksekusi. Mencetak, revisi akhir, dan evaluasi penjualan terjadi pada tahap lain.',
+  b:function(b){return mc(b,['Tahap mencetak dan mempublikasikan hasil desain','Tahap persiapan dan perencanaan sebelum desain dieksekusi','Tahap merevisi desain setelah diterima klien','Tahap mengevaluasi hasil penjualan produk'],1)}},
+ {c:'C1',type:'Benar / Salah',w:8,
+  p:'Tentukan apakah setiap pernyataan Benar atau Salah.',
+  ex:'Periksa penjelasan pada tiap pernyataan di atas.',
+  b:function(b){return tf(b,[
+    {t:'Praproduksi dilakukan setelah desain selesai dicetak.',a:false,why:'Salah. Praproduksi dilakukan sebelum desain dikerjakan.'},
+    {t:'Design brief menjadi pegangan awal dalam merancang desain.',a:true,why:'Benar. Brief memuat kebutuhan, tujuan, dan batasan proyek.'},
+    {t:'Praproduksi membantu mengurangi revisi pada tahap berikutnya.',a:true,why:'Benar. Konsep yang disepakati sejak awal mencegah perubahan besar di akhir.'}])}},
+ {c:'C2',type:'Mencocokkan',w:12,
+  p:'Pasangkan istilah dengan pengertian yang tepat.',
+  ex:'Brief = dokumen kebutuhan klien; moodboard = kumpulan referensi visual; thumbnail = sketsa kecil cepat; SWOT = pemetaan faktor internal & eksternal.',
+  b:function(b){return match(b,[
+    ['Design brief','Dokumen berisi kebutuhan, tujuan, dan batasan proyek dari klien'],
+    ['Moodboard','Kumpulan referensi visual penentu gaya, warna, dan suasana desain'],
+    ['Thumbnail sketch','Sketsa kecil cepat untuk menjajaki banyak alternatif tata letak'],
+    ['Analisis SWOT','Pemetaan faktor internal dan eksternal sebagai dasar strategi']])}},
+ {c:'C2',type:'Kalimat Rumpang',w:12,
+  p:'Lengkapi kalimat berikut dengan kata dari bank kata.',
+  ex:'Praproduksi adalah tahap persiapan yang dilakukan sebelum desain dikerjakan. Hasilnya berupa konsep dan sketsa sebagai dasar tahap produksi.',
+  b:function(b){return fill(b,'Praproduksi adalah tahap {0} yang dilakukan {1} desain dikerjakan. Hasil utamanya antara lain {2} dan sketsa sebagai dasar tahap {3}.',['persiapan','sebelum','konsep','produksi'],['persiapan','sebelum','konsep','produksi','sesudah','pencetakan'])}},
+ {c:'C3',type:'Studi Kasus',w:12,
+  p:'Tentukan langkah praproduksi yang sedang dilakukan pada setiap situasi.',
+  ex:'Menanyakan audiens & tenggat = Memahami Brief; mengumpulkan contoh, palet, huruf = Moodboard & Referensi; jadwal, aset, biaya = Perencanaan Teknis; menggambar alternatif layout = Sketsa.',
+  b:function(b){return scenarios(b,[
+    {t:'Dimas menanyakan kepada pemilik toko batik tentang usia pelanggan, pesan utama, dan tenggat waktu poster.',a:'Memahami Brief'},
+    {t:'Ayu mengumpulkan contoh poster, palet warna, dan gaya huruf untuk menentukan nuansa visual kampanye.',a:'Moodboard & Referensi'},
+    {t:'Tim menyusun jadwal pengerjaan, daftar aset foto, dan perkiraan biaya cetak.',a:'Perencanaan Teknis'},
+    {t:'Raka menggambar enam alternatif tata letak kecil di atas kertas.',a:'Sketsa'}],STEPS)}},
+ {c:'C4',type:'Mengurutkan',w:12,
+  p:'Susun ketujuh langkah praproduksi dengan urutan yang benar.',
+  ex:'Urutan: 1 Memahami Brief → 2 Riset → 3 Brainstorming → 4 Moodboard & Referensi → 5 Sketsa → 6 Perencanaan Teknis → 7 Presentasi & Persetujuan.',
+  b:function(b){return ordering(b,STEPS)}},
+ {c:'C4',type:'Klasifikasi SWOT',w:12,
+  p:'Toko oleh-oleh khas Singkep akan dibuatkan kemasan baru. Kelompokkan setiap temuan ke S, W, O, atau T.',
+  ex:'Ingat: S dan W berasal dari dalam (internal); O dan T berasal dari luar (eksternal).',
+  b:function(b){return swotClass(b,[
+    {t:'Memiliki produk olahan khas daerah yang unik.',a:'S',why:'Faktor internal yang menguntungkan.'},
+    {t:'Kemasan produk masih polos dan kurang menarik.',a:'W',why:'Faktor internal yang merugikan.'},
+    {t:'Kunjungan wisatawan ke daerah terus meningkat.',a:'O',why:'Faktor eksternal yang menguntungkan.'},
+    {t:'Banyak produk sejenis dari luar daerah berkemasan modern.',a:'T',why:'Faktor eksternal yang merugikan.'},
+    {t:'Pemilik aktif mengelola media sosial setiap hari.',a:'S',why:'Kemampuan internal yang menguntungkan.'},
+    {t:'Tersedia pelatihan UMKM gratis dari pemerintah daerah.',a:'O',why:'Faktor eksternal yang dapat dimanfaatkan.'}])}},
+ {c:'C5',type:'Evaluasi Kasus',w:12,
+  p:'Seorang desainer langsung membuka aplikasi dan membuat poster tanpa menanyakan brief, riset, maupun sketsa. Klien menolak hasilnya tiga kali. Penilaian yang paling tepat adalah...',
+  ex:'Melewati praproduksi membuat arah desain tidak jelas sehingga revisi membengkak. Masalahnya bukan sekadar pemilihan warna.',
+  b:function(b){return mc(b,['Wajar, karena proses kreatif lebih baik langsung digital tanpa perencanaan','Kurang tepat; melewati praproduksi membuat arah desain tidak jelas sehingga revisi membengkak','Tepat, karena penolakan klien membantu desainer belajar lebih cepat','Kurang tepat, sebab satu-satunya kesalahan ada pada pemilihan warna'],1)}},
+ {c:'C6',type:'Merancang',w:12,
+  p:'Rancang ringkasan praproduksi untuk poster "Pameran Karya DKV SMKN 1 Singkep". Pilih opsi yang paling koheren pada setiap bagian.',
+  ex:'Rancangan yang baik selaras: tujuan mengajak hadir, audiens remaja & masyarakat, gaya visual cerah dan kreatif, serta sketsa & persetujuan sebelum produksi.',
+  b:function(b){return compose(b,[
+    {l:'Tujuan desain',o:['Mengajak siswa dan masyarakat menghadiri pameran','Menjual pakaian seragam sekolah','Menampilkan laporan keuangan sekolah']},
+    {l:'Target audiens',o:['Siswa SMP/SMK dan masyarakat sekitar usia 13–25 tahun','Lansia pensiunan saja','Pemasok bahan bangunan']},
+    {l:'Gaya visual (hasil moodboard)',o:['Warna cerah, tipografi tegas, ilustrasi kreatif','Warna gelap monoton dengan teks sangat padat','Tampilan resmi seperti surat dinas']},
+    {l:'Langkah sebelum digitalisasi',o:['Membuat sketsa thumbnail dan meminta persetujuan','Langsung mencetak 500 lembar','Menunggu ide muncul tanpa jadwal']}])}}
+];
+
+var qi=0,results=[],checked=false,checkFn=null,quizStarted=false;
+function startQuiz(){quizStarted=true;qi=0;results=[];renderQ()}
+function renderQ(){
+  var q=quiz[qi],area=$('#quizArea'),B=BLOOM[q.c];
+  checked=false;
+  area.innerHTML='';
+  var top=el('div','qtop','<span>Soal '+(qi+1)+' dari '+quiz.length+'</span><span>'+q.w+' poin</span>');
+  var pb=el('div','prog qbar','<i style="width:'+(qi/quiz.length*100)+'%"></i>');
+  var hd=el('div','qhead','<span class="badge" style="background:'+B.c+'">'+q.c+' · '+B.n+'</span><span class="badge">'+q.type+'</span>');
+  var pr=el('div','qprompt',q.p);
+  var body=el('div','qbody');
+  var fb=el('div','fb');
+  var btn=el('button','btn main block','Periksa Jawaban');
+  [top,pb,hd,pr,body,fb,btn].forEach(function(x){area.appendChild(x)});
+  checkFn=q.b(body);
+  btn.onclick=function(){
+    if(!checked){
+      var f=checkFn();results[qi]=f;checked=true;
+      area.classList.add('locked');
+      fb.className='fb show '+(f===1?'good':f>0?'mid':'low');
+      fb.innerHTML='<b>'+(f===1?'✅ Tepat sekali!':f>0?'🟡 Sebagian benar ('+Math.round(f*100)+'%)':'❌ Belum tepat')+'</b>'+q.ex;
+      btn.textContent=qi===quiz.length-1?'Lihat Hasil 🏁':'Lanjut ›';
+      btn.className='btn alt block';
+      fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }else{
+      area.classList.remove('locked');
+      qi++;
+      if(qi>=quiz.length)showResult();else{renderQ();window.scrollTo(0,0)}
+    }
+  };
+}
+function showResult(){
+  var total=0,per={};
+  quiz.forEach(function(q,i){
+    var s=(results[i]||0)*q.w;total+=s;
+    per[q.c]=per[q.c]||{g:0,m:0};per[q.c].g+=s;per[q.c].m+=q.w;
+  });
+  total=Math.round(total);
+  var best=store.get('dkv_best',null);
+  if(best===null||total>best){store.set('dkv_best',total);best=total}
+  var msg=total>=85?'Luar biasa! Kamu menguasai materi praproduksi. 🎉':total>=70?'Bagus! Sedikit lagi, ulangi bagian yang masih keliru. 👍':total>=50?'Cukup. Baca ulang materi dan pakai kartu hafalan. 📚':'Jangan menyerah! Pelajari materi dulu, lalu coba lagi. 💪';
+  var area=$('#quizArea');area.innerHTML='';
+  var wrap=el('div','result');
+  wrap.appendChild(el('span','tag','Hasil Latihan'));
+  wrap.appendChild(el('div','score',total+'<small style="font-size:22px">/100</small>'));
+  wrap.appendChild(el('p','',msg));
+  wrap.appendChild(el('p','',''));
+  var card=el('div','card');card.appendChild(el('h3','','Capaian per Level Bloom'));
+  Object.keys(per).forEach(function(k){
+    var pct=Math.round(per[k].g/per[k].m*100);
+    card.appendChild(el('div','bl','<span class="badge" style="background:'+BLOOM[k].c+'">'+k+'</span><div class="prog"><i style="width:'+pct+'%"></i></div><span>'+pct+'%</span>'));
+  });
+  wrap.appendChild(card);
+  wrap.appendChild(el('p','','<b>Skor terbaikmu: '+best+'</b>'));
+  var again=el('button','btn main block','↺ Ulangi Latihan');
+  again.onclick=function(){startQuiz();window.scrollTo(0,0)};
+  var rev=el('button','btn block','📚 Baca Ulang Materi');rev.style.marginTop='12px';
+  rev.onclick=function(){go('definisi')};
+  wrap.appendChild(again);wrap.appendChild(rev);
+  area.appendChild(wrap);
+  window.scrollTo(0,0);
+}
+
+buildStepper();updateProgress();
+$$('.nav button')[0].classList.add('on');
+})();
+</script>
+</body>
+</html>
